@@ -4,9 +4,10 @@
   "description": "Backend portion of my multi-player chess game",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
-  },
+  "start": "node app.js",
+  "dev": "nodemon app.js",
+  "test": "echo \"No backend tests yet\" && exit 0"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ProjectsByJackHe/multiplayer-chess-game-backend.git"
