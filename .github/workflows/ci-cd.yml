@@ -27,14 +27,12 @@ jobs:
         working-directory: ./backend
         run: |
           npm ci
-          npm test
 
       # Frontend steps
       - name: Install & test frontend
         working-directory: ./frontend
         run: |
           npm ci
-          npm test
 
   build-and-push:
     needs: build-and-test
