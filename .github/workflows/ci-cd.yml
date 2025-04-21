@@ -38,7 +38,7 @@ jobs:
 
       - name: Run frontend tests
         working-directory: ./frontend
-        run: npm test -- --watchAll=false
+        run: npm test -- 
 
   build-and-push:
     needs: build-and-test
