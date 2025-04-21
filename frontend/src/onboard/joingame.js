@@ -77,7 +77,7 @@ const JoinGame = (props) => {
                             fontSize: '1.5rem',
                         }}
                     >
-                        Waiting for opponent...
+                        Waiting for player...
                     </h2>
                 </div>
 
