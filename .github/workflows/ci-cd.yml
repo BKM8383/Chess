@@ -11,31 +11,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js for backend
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
+        uses: actions/checkout@v4  # Updated to v4
 
       - name: Install & test backend
         working-directory: backend
+        uses: actions/setup-node@v4  # Move setup-node inside the directory-specific step
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json  # Specific cache path
         run: |
-          npm install
+          npm ci  # Use ci instead of install for clean installs
           npm test
-      - name: Set up Node.js for frontend
-        uses: actions/setup-node@v3
+
+      - name: Install & test frontend
+        working-directory: frontend
+        uses: actions/setup-node@v4  # Separate setup for frontend
         with:
           node-version: 18
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
-
-      - name: Install & test frontend
-        working-directory: frontend
         run: |
-          npm install
+          npm ci
           npm test
 
   build-and-push:
@@ -43,24 +40,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3  # Updated to v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build & push backend image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5  # Updated to v5
         with:
           context: ./backend
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/temp-backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build & push frontend image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: ./frontend
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/temp-frontend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
