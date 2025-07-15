@@ -36,6 +36,12 @@ Try it now: [https://bkmchess.vercel.app](https://bkmchess.vercel.app)
 
 ---
 
+## 📐 Project Architecture
+
+![Project Architecture](./Architecture.png)
+
+---
+
 ## 🛠 Tech Stack
 
 - **Frontend**  
